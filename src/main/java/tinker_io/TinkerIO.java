@@ -1,5 +1,6 @@
 package tinker_io;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import tinker_io.proxy.CommonProxy;
+import tinker_io.registry.BlockRegistry;
 import tinker_io.registry.ItemRegistry;
 
 @Mod(modid = TinkerIO.MOD_ID,
@@ -65,11 +67,20 @@ public class TinkerIO {
         @SubscribeEvent
         public static void registerItems(RegistryEvent.Register<Item> event) {
             ItemRegistry.register(event.getRegistry());
+            BlockRegistry.registerItemBlocks(event.getRegistry());
         }
 
         @SubscribeEvent
-        public static void registerItems(ModelRegistryEvent event) {
-            ItemRegistry.registerModels();
+        public static void registerBlocks(RegistryEvent.Register<Block> event) {
+            BlockRegistry.register(event.getRegistry());
         }
+
+        @SubscribeEvent
+        public static void registerModels(ModelRegistryEvent event) {
+            ItemRegistry.registerModels();
+            BlockRegistry.registerModels();
+        }
+
+
     }
 }
