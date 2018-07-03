@@ -1,11 +1,19 @@
 package tinker_io;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import tinker_io.proxy.CommonProxy;
+import tinker_io.registry.ItemRegistry;
 
 @Mod(modid = TinkerIO.MOD_ID,
         version = TinkerIO.VERSION,
@@ -29,9 +37,17 @@ public class TinkerIO {
     @Mod.Instance(MOD_ID)
     public static TinkerIO instance;
 
+    //Creative Tabs
+    public static CreativeTabs creativeTabs = new CreativeTabs("TinkerIO_Tabs"){
+        public ItemStack getTabIconItem() {
+//            return new ItemStack(TinkerTools.largePlate);
+            return new ItemStack(Items.CAKE);
+        }
+    };
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        System.out.println(NAME + " is loading!");
+
     }
 
     @Mod.EventHandler
@@ -42,5 +58,18 @@ public class TinkerIO {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
 
+    }
+
+    @Mod.EventBusSubscriber
+    public static class RegistrationHandler {
+        @SubscribeEvent
+        public static void registerItems(RegistryEvent.Register<Item> event) {
+            ItemRegistry.register(event.getRegistry());
+        }
+
+        @SubscribeEvent
+        public static void registerItems(ModelRegistryEvent event) {
+            ItemRegistry.registerModels();
+        }
     }
 }
