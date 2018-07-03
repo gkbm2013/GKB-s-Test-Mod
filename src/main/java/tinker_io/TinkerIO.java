@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import tinker_io.proxy.CommonProxy;
 import tinker_io.registry.BlockRegistry;
 import tinker_io.registry.ItemRegistry;
+import tinker_io.registry.RecipeRegistry;
 
 @Mod(modid = TinkerIO.MOD_ID,
         version = TinkerIO.VERSION,
@@ -54,7 +55,7 @@ public class TinkerIO {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-
+        RecipeRegistry.init();
     }
 
     @Mod.EventHandler
