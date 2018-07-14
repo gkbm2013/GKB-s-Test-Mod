@@ -13,10 +13,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import tinker_io.proxy.CommonProxy;
-import tinker_io.registry.BlockRegistry;
-import tinker_io.registry.ItemRegistry;
-import tinker_io.registry.RecipeRegistry;
+import tinker_io.registry.*;
 
 @Mod(modid = TinkerIO.MOD_ID,
         version = TinkerIO.VERSION,
@@ -60,7 +59,7 @@ public class TinkerIO {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
     }
 
     @Mod.EventBusSubscriber
@@ -74,6 +73,7 @@ public class TinkerIO {
         @SubscribeEvent
         public static void registerBlocks(RegistryEvent.Register<Block> event) {
             BlockRegistry.register(event.getRegistry());
+            TileEntityRegistry.register();
         }
 
         @SubscribeEvent
