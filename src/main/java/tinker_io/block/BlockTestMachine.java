@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.lwjgl.Sys;
 import tinker_io.TinkerIO;
 import tinker_io.registry.GuiRegistry;
 import tinker_io.tileentity.TileEntityTestMachine;
@@ -42,7 +43,7 @@ public class BlockTestMachine extends BlockTileEntity<TileEntityTestMachine> {
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        this.setDefaultFacing(world, pos, state);
+        world.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
     }
 
     @Override
@@ -62,6 +63,11 @@ public class BlockTestMachine extends BlockTileEntity<TileEntityTestMachine> {
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING);
+    }
+
+    @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        this.setDefaultFacing(worldIn, pos, state);
     }
 
     @Override
@@ -105,7 +111,7 @@ public class BlockTestMachine extends BlockTileEntity<TileEntityTestMachine> {
             } else if (enumfacing == EnumFacing.EAST && blockStateEast.isFullBlock() && !blockStateWest.isFullBlock()) {
                 enumfacing = EnumFacing.WEST;
             }
-
+            System.out.println(enumfacing);
             worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
         }
     }
